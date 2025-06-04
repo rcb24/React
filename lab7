@@ -1,0 +1,97 @@
+/*ProfileCard.js*/ 
+ 
+import React, { useState } from "react"; 
+import "./ProfileCard.css"; 
+ 
+const ProfileCard = ({ name, bio, profilePicture, initialBgColor }) => { 
+  const [bgColor, setBgColor] = useState(initialBgColor); 
+ 
+  const handleMouseEnter = () => { 
+    setBgColor("#f4a261"); 
+  }; 
+  const handleMouseLeave = () => { 
+    setBgColor(initialBgColor); 
+  }; 
+  return ( 
+    <div 
+      className="profile-card" 
+      style={{ backgroundColor: bgColor }} 
+      onMouseEnter={handleMouseEnter} 
+      onMouseLeave={handleMouseLeave} 
+    > 
+      <img src={profilePicture} alt={name} className="profile-picture" /> 
+      <h2 className="profile-name">{name}</h2> 
+      <p className="profile-bio">{bio}</p> 
+    </div> 
+  ); 
+}; 
+ 
+const App = () => { 
+  return ( 
+    <div className="app-container"> 
+      <ProfileCard 
+        name="John Doe" 
+        bio="Web Developer | Tech Enthusiast | Lifelong Learner" 
+        profilePicture="https://via.placeholder.com/150" 
+        initialBgColor="#2a9d8f" 
+      /> 
+    </div> 
+  ); 
+}; 
+export default App; 
+ 
+/* ProfileCard.css */ 
+ 
+.profile-card { 
+    width: 300px; 
+    padding: 20px; 
+    border-radius: 15px; 
+    text-align: center; 
+    transition: background-color 0.3s ease-in-out, transform 0.2s; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  } 
+    .profile-card:hover { 
+    transform: scale(1.05); 
+  } 
+    .profile-picture { 
+    width: 100px; 
+    height: 100px; 
+    border-radius: 50%; 
+    border: 3px solid white; 
+    object-fit: cover; 
+  } 
+    .profile-name { 
+    font-size: 1.5em; 
+    margin-top: 10px; 
+    color: white; 
+  } 
+    .profile-bio { 
+    font-size: 1em; 
+    color: white; 
+  } 
+    .app-container { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    background-color: #264653; 
+  } 
+ 
+/*App.JS*/ 
+ 
+import React from "react"; 
+import ProfileCard from "./ProfileCard"; 
+import "./ProfileCard.css"; 
+const App = () => { 
+  return (
+    <div className="app-container"> 
+      <ProfileCard 
+        name="John Doe" 
+        bio="Web Developer | Tech Enthusiast | Lifelong Learner" 
+        profilePicture="https://via.placeholder.com/150" 
+        initialBgColor="#2a9d8f" 
+      /> 
+    </div> 
+  ); 
+}; 
+export default App; 
