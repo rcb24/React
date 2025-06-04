@@ -1,0 +1,111 @@
+ToDoFunction.js 
+import React, { useState } from 'react'; 
+function ToDoFunction() { 
+const [tasks, setTasks] = useState([]); 
+const [newTask, setNewTask] = useState(''); 
+const handleAddTask = () => { 
+if (newTask.trim() !== '') { 
+setTasks([...tasks, { text: newTask, isCompleted: false }]); 
+setNewTask(''); 
+} 
+}; 
+const handleDeleteTask = (index) => { 
+const updatedTasks = tasks.filter((_, i) => i !== index); 
+setTasks(updatedTasks); 
+}; 
+const handleToggleCompletion = (index) => { 
+const updatedTasks = tasks.map((task, i) => 
+i === index ? { ...task, isCompleted: !task.isCompleted } : task 
+); 
+setTasks(updatedTasks); 
+}; 
+return ( 
+<div style={styles.container}>
+<h1>To-Do List</h1> 
+<div style={styles.inputContainer}> 
+<input 
+type="text" 
+value={newTask} 
+onChange={(e) => setNewTask(e.target.value)} 
+placeholder="Add a new task" 
+style={styles.input} 
+/> 
+<button onClick={handleAddTask} style={styles.addButton}> 
+Add 
+</button> 
+</div> 
+<ul style={styles.list}> 
+{tasks.map((task, index) => ( 
+<li key={index} style={styles.listItem}> 
+<span 
+onClick={() => handleToggleCompletion(index)} 
+style={{ 
+...styles.taskText, 
+textDecoration: task.isCompleted ? 'line-through' : 'none', 
+color: task.isCompleted ? 'gray' : 'black', 
+}} 
+> 
+{task.text} 
+</span> 
+<button 
+onClick={() => handleDeleteTask(index)} 
+style={styles.deleteButton} 
+> 
+Delete 
+</button> 
+</li> 
+))} 
+</ul> 
+</div> 
+); 
+} 
+const styles = { 
+container: { 
+textAlign: 'center', 
+marginTop: '50px', 
+}, 
+inputContainer: { 
+marginBottom: '20px', 
+}, 
+input: {
+padding: '10px', 
+width: '300px', 
+marginRight: '10px', 
+}, 
+addButton: { 
+padding: '10px 20px', 
+}, 
+list: { 
+listStyleType: 'none', 
+padding: 0, 
+}, 
+listItem: { 
+display: 'flex', 
+justifyContent: 'center', 
+alignItems: 'center', 
+marginBottom: '10px', 
+}, 
+taskText: { 
+cursor: 'pointer', 
+marginRight: '10px', 
+}, 
+deleteButton: { 
+padding: '5px 10px', 
+backgroundColor: 'red', 
+color: 'white', 
+border: 'none', 
+cursor: 'pointer', 
+}, 
+}; 
+export default ToDoFunction; 
+App.Js 
+import React from 'react'; 
+import ToDoFunction from './ToDoFunction'; 
+function App() { 
+return ( 
+<div> 
+<ToDoFunction /> 
+</div> 
+); 
+} 
+export default App;
