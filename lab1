@@ -1,0 +1,20 @@
+import React, { useState } from "react"; 
+function App() { 
+const [text, setText] = useState(""); 
+return ( 
+<div style={{ textAlign: "center", marginTop: "50px" }}> 
+<h1>React Input Example</h1> 
+<input 
+type="text" 
+placeholder="Type something..." 
+value={text} 
+onChange={(e) => setText(e.target.value)} 
+style={{ padding: "10px", fontSize: "16px" }} 
+/> 
+<p style={{ fontSize: "20px", marginTop: "20px" }}> 
+You typed: <strong>{text}</strong> 
+</p> 
+</div> 
+); 
+} 
+export default App; 
