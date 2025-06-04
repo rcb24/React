@@ -1,0 +1,192 @@
+UserForm.js 
+import React, { useState } from 'react'; 
+function UserForm() { 
+// State variables for input fields and error messages. 
+const [name, setName] = useState(''); 
+const [email, setEmail] = useState(''); 
+const [password, setPassword] = useState(''); 
+const [errors, setErrors] = useState({}); 
+const [showPassword, setShowPassword] = useState(false); 
+const [submittedData, setSubmittedData] = useState(null); 
+// Simple sanitization function: trim whitespace. 
+const sanitizeInput = (input) => input.trim(); 
+// Validate fields and return an errors object. 
+const validate = () => { 
+const newErrors = {}; 
+const cleanName = sanitizeInput(name); 
+const cleanEmail = sanitizeInput(email); 
+const cleanPassword = sanitizeInput(password); 
+if (!cleanName) { 
+newErrors.name = 'Name is required.'; 
+}
+if (!cleanEmail) { 
+newErrors.email = 'Email is required.'; 
+} else if (!/\S+@\S+\.\S+/.test(cleanEmail)) { 
+newErrors.email = 'Email format is invalid.'; 
+} 
+if (!cleanPassword) { 
+newErrors.password = 'Password is required.'; 
+} else if (cleanPassword.length < 6) { 
+newErrors.password = 'Password must be at least 6 characters.'; 
+} 
+return newErrors; 
+}; 
+// Handle form submission. 
+const handleSubmit = (e) => { 
+e.preventDefault(); 
+const formErrors = validate(); 
+setErrors(formErrors); 
+if (Object.keys(formErrors).length === 0) { 
+// Clean inputs 
+const formData = { 
+name: sanitizeInput(name), 
+email: sanitizeInput(email), 
+password: sanitizeInput(password), 
+}; 
+// Log the data and update state. 
+console.log('Submitted Data:', formData); 
+setSubmittedData(formData); 
+// Optionally clear the form: 
+// setName(''); 
+// setEmail(''); 
+// setPassword(''); 
+} 
+}; 
+return ( 
+<div style={styles.container}>     
+<h2>User Registration</h2> 
+<form onSubmit={handleSubmit} noValidate> 
+{/* Name Field */} 
+<div style={styles.formGroup}> 
+<label htmlFor="name">Name</label> 
+<input 
+id="name" 
+type="text" 
+value={name} 
+onChange={(e) => setName(e.target.value)} 
+style={{
+...styles.input, 
+borderColor: errors.name ? 'red' : '#ccc', 
+}} 
+/> 
+{errors.name && <p style={styles.errorText}>{errors.name}</p>} 
+</div> 
+{/* Email Field */} 
+<div style={styles.formGroup}> 
+<label htmlFor="email">Email</label> 
+<input 
+id="email" 
+type="email" 
+value={email} 
+onChange={(e) => setEmail(e.target.value)} 
+style={{ 
+...styles.input, 
+borderColor: errors.email ? 'red' : '#ccc', 
+}} 
+/> 
+{errors.email && <p style={styles.errorText}>{errors.email}</p>} 
+</div> 
+{/* Password Field */} 
+<div style={styles.formGroup}> 
+<label htmlFor="password">Password</label> 
+<input 
+id="password" 
+type={showPassword ? 'text' : 'password'} 
+value={password} 
+onChange={(e) => setPassword(e.target.value)} 
+style={{ 
+...styles.input, 
+borderColor: errors.password ? 'red' : '#ccc', 
+}} 
+/> 
+{errors.password && <p style={styles.errorText}>{errors.password}</p>} 
+<div style={styles.showPasswordContainer}> 
+<input 
+type="checkbox" 
+id="showPassword" 
+checked={showPassword} 
+onChange={(e) => setShowPassword(e.target.checked)} 
+/> 
+<label htmlFor="showPassword" style={styles.showPasswordLabel}> 
+Show Password 
+</label> 
+</div> 
+</div>
+{/* Submit Button */} 
+<button type="submit" style={styles.submitButton}> 
+Submit 
+</button> 
+</form> 
+{/* Optionally display the submitted data */} 
+{submittedData && ( 
+<div style={styles.result}> 
+<h3>Submitted Data:</h3> 
+<pre>{JSON.stringify(submittedData, null, 2)}</pre> 
+</div> 
+)} 
+</div> 
+); 
+} 
+// Inline styles for the component. 
+const styles = { 
+container: { 
+maxWidth: '500px', 
+margin: '30px auto', 
+padding: '20px', 
+border: '1px solid #ddd', 
+borderRadius: '8px', 
+fontFamily: 'Arial, sans-serif', 
+}, 
+formGroup: { 
+marginBottom: '15px', 
+}, 
+input: { 
+width: '100%', 
+padding: '10px', 
+fontSize: '16px', 
+border: '1px solid #ccc', 
+borderRadius: '4px', 
+outline: 'none', 
+}, 
+errorText: { 
+color: 'red', 
+marginTop: '5px', 
+fontSize: '0.9em', 
+},submitButton: { 
+width: '100%', 
+padding: '10px', 
+fontSize: '16px', 
+backgroundColor: '#28a745', 
+color: '#fff', 
+border: 'none', 
+borderRadius: '4px', 
+cursor: 'pointer', 
+}, 
+result: { 
+marginTop: '20px', 
+backgroundColor: '#f7f7f7', 
+padding: '10px', 
+borderRadius: '4px', 
+}, 
+showPasswordContainer: { 
+marginTop: '8px', 
+display: 'flex', 
+alignItems: 'center', 
+}, 
+showPasswordLabel: { 
+marginLeft: '5px', 
+fontSize: '0.9em', 
+}, 
+}; 
+export default UserForm; 
+App.Js 
+import React from 'react'; 
+import UserForm from './UserForm'; 
+function App() { 
+return ( 
+<div> 
+<UserForm /> 
+</div> 
+); 
+} 
+export default App;
