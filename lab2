@@ -1,0 +1,42 @@
+Create  Header.js 
+import React from "react"; 
+function Header({ title }) { 
+return ( 
+<header style={{ backgroundColor: "#282c34", color: "white", padding: "10px", textAlign: 
+"center" }}> 
+<h1>{title}</h1> 
+</header> 
+); 
+} 
+export default Header; 
+
+Create Footer.js 
+import React from "react"; 
+function Footer({ copyright }) { 
+return ( 
+<footer style={{ backgroundColor: "#f1f1f1", color: "#333", padding: "10px", textAlign: 
+"center", marginTop: "20px" }}> 
+<p>{copyright}</p> 
+</footer> 
+); 
+} 
+export default Footer; 
+
+Create  APP.js 
+import React from "react"; 
+import Header from "./Header"; 
+import Footer from "./Footer"; 
+function App() { 
+const appTitle = "Welcome to HIT,CSE"; 
+const copyrightText = "© 2025 HSIT,Nidasoshi. All rights reserved."; 
+return ( 
+<div> 
+<Header title={appTitle} /> 
+<main style={{ textAlign: "center", padding: "20px" }}> 
+<p>This is the main content area.</p> 
+</main> 
+<Footer copyright={copyrightText} /> 
+</div> 
+); 
+} 
+export default App
